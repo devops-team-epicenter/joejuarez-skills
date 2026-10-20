@@ -1,0 +1,15 @@
+# Packaged skill bundles — regenerate from the folder, don't commit
+*.skill
+dist/
+
+# skill-creator eval workspaces and feedback
+*-workspace/
+feedback.json
+
+# OS / editor / python noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+__pycache__/
+*.pyc
