@@ -29,7 +29,7 @@ cp -r /path/to/JoeJuarez-Skills/chat-recap ~/.claude/skills/
 Or clone once and symlink so `git pull` keeps every machine current:
 
 ```bash
-git clone https://github.com/<owner>/JoeJuarez-Skills.git ~/JoeJuarez-Skills
+git clone https://github.com/devops-team-epicenter/joejuarez-skills.git ~/JoeJuarez-Skills
 ln -s ~/JoeJuarez-Skills/chat-recap ~/.claude/skills/chat-recap
 ```
 
