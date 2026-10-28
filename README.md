@@ -10,6 +10,9 @@ Each skill lives in its own folder with a `SKILL.md` at the root. Claude reads t
 |-------|--------------|-----------------|
 | [`chat-recap`](chat-recap/) | Rebuilds orientation in a long or branching conversation: reconstructs thread statuses, surfaces open decisions, recommends a focus, assesses context efficiency, and prepares a checkpoint for compaction or a fresh session. Deliberately does **not** execute unfinished work on its own. | `Chat-Recap`, `recap this chat`, `where were we`, `what's still open`, `help me refocus` — plus modifiers like `Chat-Recap, quick`, `Chat-Recap, checkpoint`, `Chat-Recap on [topic]` |
 | [`tracking-linear`](tracking-linear/) | Keeps development work tied to Linear from request to release: finds or creates the matching issue, classifies it (Bug / UX Improvement / Feature), links every PR, writes a plain-language brief and fix summary, and reconciles merge, deployment and QA status only from verified evidence. Configure team, statuses, labels and environments per repository (see §1 of the skill). | `--linear`, e.g. `--linear Fix checkout when a discount code has expired.`, `--linear ABC-123 Implement the requested changes.`, `--linear Reconcile this PR with its ticket.` |
+| [`prep-handoff`](prep-handoff/) | Writes a short conversation summary plus a copy-paste re-entry prompt before you `/compact` or `/clear`, so work resumes cleanly in a fresh context. Lighter than `chat-recap`'s checkpoint mode: use it when you already know you're about to reset. | `prep a handoff`, `save context`, `write a re-entry prompt`, `snapshot where we are` |
+| [`cms-page-builder`](cms-page-builder/) | Architecture blueprint for a block-based visual CMS / page builder: typed block model, container nesting, isomorphic render registry, draft/publish with immutable snapshots, merge tokens, and a list of hard-won pitfalls. | `page builder`, `visual editor`, `block editor`, `headless CMS front-end`, adding a block type or renderer target |
+| [`universal-cro-seo-aeo-geo`](universal-cro-seo-aeo-geo/) | Phased audit-and-build program for CRO, SEO, AEO/GEO (visibility in AI answer engines) and UX on any site type or stack, with human approval gates and a site-type overlay. Phase detail lives in `references/`. | `review my site`, `SEO strategy`, `get cited by ChatGPT`, `make this page convert`, `new site for my business` |
 
 ## Install
 
@@ -64,15 +67,11 @@ Reference: [Claude Code skills docs](https://code.claude.com/docs/en/skills).
    ```
 
 3. Write the body in the imperative. Explain *why* each rule matters rather than stacking ALL-CAPS musts; keep `SKILL.md` under ~500 lines and move bulk material into `references/`, deterministic helpers into `scripts/`, templates into `assets/`.
-4. Validate the frontmatter before committing:
+4. Validate every skill before committing (checks frontmatter keys claude.ai accepts, name/folder match, description length, and SKILL.md size):
 
    ```bash
-   python3 - <<'EOF'
-   import re, yaml, sys
-   t = open("my-skill/SKILL.md", encoding="utf-8").read()
-   m = re.match(r"^---\n(.*?)\n---\n", t, re.S) or sys.exit("no frontmatter")
-   fm = yaml.safe_load(m.group(1)); assert fm["name"] == "my-skill"; print("OK", fm["name"])
-   EOF
+   pip install pyyaml   # once
+   python3 scripts/validate.py
    ```
 
 5. Add a row to the **Skills** table above.
@@ -82,9 +81,19 @@ Reference: [Claude Code skills docs](https://code.claude.com/docs/en/skills).
 ```
 JoeJuarez-Skills/
 ├── README.md
+├── LICENSE
 ├── .gitignore
+├── scripts/
+│   └── validate.py            # frontmatter + size checks for every skill
 ├── chat-recap/
 │   └── SKILL.md
+├── prep-handoff/
+│   └── SKILL.md
+├── cms-page-builder/
+│   └── SKILL.md
+├── universal-cro-seo-aeo-geo/
+│   ├── SKILL.md
+│   └── references/            # one file per phase, guardrails, worked example
 └── tracking-linear/
     ├── SKILL.md
     └── references/
@@ -92,3 +101,7 @@ JoeJuarez-Skills/
 ```
 
 Optional per-skill subfolders: `scripts/`, `references/`, `assets/`. Eval workspaces (`<skill>-workspace/`) and packaged `.skill` files are git-ignored — regenerate them, don't commit them.
+
+## License
+
+[MIT](LICENSE). Use, adapt, and redistribute freely.
