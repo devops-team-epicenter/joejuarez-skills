@@ -9,6 +9,7 @@ Each skill lives in its own folder with a `SKILL.md` at the root. Claude reads t
 | Skill | What it does | Trigger phrases |
 |-------|--------------|-----------------|
 | [`chat-recap`](chat-recap/) | Rebuilds orientation in a long or branching conversation: reconstructs thread statuses, surfaces open decisions, recommends a focus, assesses context efficiency, and prepares a checkpoint for compaction or a fresh session. Deliberately does **not** execute unfinished work on its own. | `Chat-Recap`, `recap this chat`, `where were we`, `what's still open`, `help me refocus` — plus modifiers like `Chat-Recap, quick`, `Chat-Recap, checkpoint`, `Chat-Recap on [topic]` |
+| [`tracking-linear`](tracking-linear/) | Keeps development work tied to Linear from request to release: finds or creates the matching issue, classifies it (Bug / UX Improvement / Feature), links every PR, writes a plain-language brief and fix summary, and reconciles merge, deployment and QA status only from verified evidence. Configure team, statuses, labels and environments per repository (see §1 of the skill). | `--linear`, e.g. `--linear Fix checkout when a discount code has expired.`, `--linear ABC-123 Implement the requested changes.`, `--linear Reconcile this PR with its ticket.` |
 
 ## Install
 
@@ -82,8 +83,12 @@ Reference: [Claude Code skills docs](https://code.claude.com/docs/en/skills).
 JoeJuarez-Skills/
 ├── README.md
 ├── .gitignore
-└── chat-recap/
-    └── SKILL.md
+├── chat-recap/
+│   └── SKILL.md
+└── tracking-linear/
+    ├── SKILL.md
+    └── references/
+        └── release-and-qa.md
 ```
 
 Optional per-skill subfolders: `scripts/`, `references/`, `assets/`. Eval workspaces (`<skill>-workspace/`) and packaged `.skill` files are git-ignored — regenerate them, don't commit them.
